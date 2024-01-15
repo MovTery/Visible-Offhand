@@ -2,25 +2,24 @@
   "schemaVersion": 1,
   "id": "visible_offhand",
   "version": "${version}",
-
   "name": "Visible Offhand",
   "description": "Visible Offhand",
-  "authors": [],
+  "authors": [
+    "MovTery"
+  ],
   "contact": {},
-
   "license": "MIT",
   "icon": "assets/visible_offhand/icon.png",
-
   "environment": "*",
-  "entrypoints": {},
-
-      "mixins": [
-        "visible_offhand.mixins.json"
-      ],
-
+  "entrypoints": {
+    "client": [
+      "com.movtery.visible_offhand.client.VisibleOffhandClient"
+    ]
+  },
+  "mixins": [
+    "visible_offhand.mixins.json"
+  ],
   "depends": {
-    "fabricloader": ">=${loader_version}",
-        "fabric": "*",
-    "minecraft": "${minecraft_version}"
+    "minecraft": "${minecraft}"
   }
 }

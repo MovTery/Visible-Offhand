@@ -6,6 +6,8 @@
   "mixins": [
   ],
   "client": [
+    "Config_SkinOptionsScreenMixin",
+    "HeldItemRendererMixin"
   ],
   "injectors": {
     "defaultRequire": 1
