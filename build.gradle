@@ -29,15 +29,13 @@ processResources {
     inputs.property "minecraft_version", project.minecraft_version
     inputs.property "loader_version", project.loader_version
     inputs.property "minecraft", project.minecraft
-    inputs.property "fabric_api", project.fabric_api
     filteringCharset "UTF-8"
 
     filesMatching("fabric.mod.json") {
         expand "version": project.version,
                 "minecraft_version": project.minecraft_version,
                 "loader_version": project.loader_version,
-                "minecraft": project.minecraft,
-                "fabric_api": project.fabric_api
+                "minecraft": project.minecraft
     }
 }
 

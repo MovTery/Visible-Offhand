@@ -24,7 +24,6 @@
     "visible_offhand.mixins.json"
   ],
   "depends": {
-    "minecraft": "${minecraft}",
-    "fabric-api": "${fabric_api}"
+    "minecraft": "${minecraft}"
   }
 }
