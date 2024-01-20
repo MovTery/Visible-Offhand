@@ -3,14 +3,16 @@ package com.movtery.visible_offhand.mixin;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.gui.screen.Screen;
+import net.minecraft.client.gui.screen.ScreenTexts;
 import net.minecraft.client.gui.screen.option.GameOptionsScreen;
 import net.minecraft.client.gui.screen.option.SkinOptionsScreen;
 import net.minecraft.client.gui.widget.ButtonWidget;
 import net.minecraft.client.gui.widget.CyclingButtonWidget;
 import net.minecraft.client.option.GameOptions;
+import net.minecraft.client.option.Option;
 import net.minecraft.client.render.entity.PlayerModelPart;
-import net.minecraft.screen.ScreenTexts;
 import net.minecraft.text.Text;
+import net.minecraft.text.TranslatableText;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
@@ -38,7 +40,7 @@ public abstract class Config_SkinOptionsScreenMixin extends GameOptionsScreen {
             ++i;
         }
 
-        this.addDrawableChild(this.gameOptions.getMainArm().createButton(this.gameOptions, this.width / 2 - 155 + i % 2 * 160, this.height / 6 + 24 * (i >> 1), 150));
+        this.addDrawableChild(Option.MAIN_HAND.createButton(this.gameOptions, this.width / 2 - 155 + i % 2 * 160, this.height / 6 + 24 * (i >> 1), 150));
         ++i;
         if (i % 2 == 1) {
             ++i;
@@ -46,7 +48,7 @@ public abstract class Config_SkinOptionsScreenMixin extends GameOptionsScreen {
 
         //创建一个新的按钮，用于控制开关双手显示
         this.addDrawableChild(CyclingButtonWidget.onOffBuilder(onOrOff(getConfig().getOptions().doubleHands), onOrOff(!getConfig().getOptions().doubleHands))
-                .build(this.width / 2 - 102, this.height / 6 + 24 * (i >> 1), 100, 20, Text.translatable("button.vo.double_hands"), (button, enabled) -> {
+                .build(this.width / 2 - 102, this.height / 6 + 24 * (i >> 1), 100, 20, new TranslatableText("button.vo.double_hands"), (button, enabled) -> {
                     getConfig().getOptions().doubleHands = !getConfig().getOptions().doubleHands;
                     getConfig().save();
                 }));
@@ -60,12 +62,12 @@ public abstract class Config_SkinOptionsScreenMixin extends GameOptionsScreen {
 
     @Unique
     private Text onOrOff(Boolean button) {
-        Text text;
+        TranslatableText translatableText;
         if (button) {
-            text = Text.translatable("button.vo.on");
+            translatableText = new TranslatableText("button.vo.on");
         } else {
-            text = Text.translatable("button.vo.off");
+            translatableText = new TranslatableText("button.vo.off");
         }
-        return text;
+        return translatableText;
     }
 }

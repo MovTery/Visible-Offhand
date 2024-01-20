@@ -9,7 +9,7 @@ import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.client.option.KeyBinding;
 import net.minecraft.client.util.InputUtil;
-import net.minecraft.text.Text;
+import net.minecraft.text.TranslatableText;
 import org.lwjgl.glfw.GLFW;
 
 import java.io.File;
@@ -54,13 +54,13 @@ public class VisibleOffhandClient implements ClientModInitializer {
 
                 //给玩家发送一条提示语
                 if (client.player != null) {
-                    Text text;
+                    TranslatableText translatableText;
                     if (getConfig().getOptions().doubleHands) {
-                        text = Text.translatable("button.vo.double_hands").append(" : ").append(Text.translatable("button.vo.on"));
+                        translatableText = (TranslatableText) new TranslatableText("button.vo.double_hands").append(" : ").append(new TranslatableText("button.vo.on"));
                     } else {
-                        text = Text.translatable("button.vo.double_hands").append(" : ").append(Text.translatable("button.vo.off"));
+                        translatableText = (TranslatableText) new TranslatableText("button.vo.double_hands").append(" : ").append(new TranslatableText("button.vo.off"));
                     }
-                    client.player.sendMessage(text, true);
+                    client.player.sendMessage(translatableText, true);
                 }
             }
         });
