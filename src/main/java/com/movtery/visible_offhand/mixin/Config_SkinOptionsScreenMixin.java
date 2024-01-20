@@ -55,7 +55,7 @@ public abstract class Config_SkinOptionsScreenMixin extends GameOptionsScreen {
 
         this.addDrawableChild(new ButtonWidget(this.width / 2 + 2, this.height / 6 + 24 * (i >> 1), 100, 20, ScreenTexts.DONE, (button) -> {
             if (this.client != null) {
-                this.client.setScreen(this.parent);
+                this.client.openScreen(this.parent);
             }
         }));
     }
