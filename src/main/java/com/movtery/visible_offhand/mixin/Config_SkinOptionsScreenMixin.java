@@ -4,12 +4,12 @@ import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.screen.ScreenTexts;
-import net.minecraft.client.gui.screen.option.GameOptionsScreen;
-import net.minecraft.client.gui.screen.option.SkinOptionsScreen;
+import net.minecraft.client.gui.screen.options.GameOptionsScreen;
+import net.minecraft.client.gui.screen.options.SkinOptionsScreen;
 import net.minecraft.client.gui.widget.ButtonWidget;
 import net.minecraft.client.gui.widget.OptionButtonWidget;
-import net.minecraft.client.option.GameOptions;
-import net.minecraft.client.option.Option;
+import net.minecraft.client.options.GameOptions;
+import net.minecraft.client.options.Option;
 import net.minecraft.client.render.entity.PlayerModelPart;
 import net.minecraft.text.Text;
 import net.minecraft.text.TranslatableText;
@@ -51,7 +51,7 @@ public abstract class Config_SkinOptionsScreenMixin extends GameOptionsScreen {
             Option.MAIN_HAND.cycle(this.gameOptions, 1);
             this.gameOptions.write();
             button.setMessage(Option.MAIN_HAND.getMessage(this.gameOptions));
-            this.gameOptions.sendClientSettings();
+            this.gameOptions.onPlayerModelPartChange();
         }));
         ++i;
         if (i % 2 == 1) {
