@@ -24,14 +24,12 @@ public abstract class ItemInHandRendererMixin {
     private void doubleHands(AbstractClientPlayer pPlayer, float pPartialTicks, float pPitch, InteractionHand pHand, float pSwingProgress, ItemStack pStack, float pEquippedProgress, PoseStack pPoseStack, MultiBufferSource pBuffer, int pCombinedLight, CallbackInfo ci) {
         if (getConfig().getOptions().doubleHands) {
             boolean mainHand = pHand == InteractionHand.MAIN_HAND;
-            HumanoidArm arm = mainHand ? pPlayer.getMainArm() : pPlayer.getMainArm().getOpposite();
-            pPoseStack.pushPose();
+            HumanoidArm offArm = mainHand ? pPlayer.getMainArm() : pPlayer.getMainArm().getOpposite();
             if (pStack.isEmpty()) {
                 if (!mainHand && !pPlayer.isInvisible()) {
-                    this.renderPlayerArm(pPoseStack, pBuffer, pCombinedLight, pEquippedProgress, pSwingProgress, arm);
+                    this.renderPlayerArm(pPoseStack, pBuffer, pCombinedLight, pEquippedProgress, pSwingProgress, offArm);
                 }
             }
-            pPoseStack.popPose();
         }
     }
 }

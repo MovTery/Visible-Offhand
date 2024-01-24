@@ -21,7 +21,7 @@ public class Config {
         this.file = file;
     }
 
-    public static Options getOptions() {
+    public Options getOptions() {
         return options;
     }
 
