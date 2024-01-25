@@ -1,7 +1,6 @@
 {
   "pack": {
-    "description": "untitled resources",
-    "pack_format": 18,
-    "forge:server_data_pack_format": 12
+    "description": "visible_offhand resources",
+    "pack_format": 26
   }
 }

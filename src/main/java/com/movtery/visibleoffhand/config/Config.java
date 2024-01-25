@@ -1,8 +1,8 @@
-package com.movtery.visible_offhand.config;
+package com.movtery.visibleoffhand.config;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.movtery.visible_offhand.VisibleOffhand;
+import com.movtery.visibleoffhand.VisibleOffhand;
 
 import java.io.File;
 import java.io.IOException;

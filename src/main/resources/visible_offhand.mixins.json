@@ -1,9 +1,9 @@
 {
   "required": true,
   "minVersion": "0.8",
-  "package": "com.movtery.visible_offhand.mixin",
+  "package": "com.movtery.visibleoffhand.mixin",
   "compatibilityLevel": "JAVA_8",
-  "refmap": "visible_offhand.refmap.json",
+  "refmap": "VisibleOffhand.refmap.json",
   "mixins": [
   ],
   "client": [

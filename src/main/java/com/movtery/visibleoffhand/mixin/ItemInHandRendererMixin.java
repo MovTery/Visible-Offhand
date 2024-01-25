@@ -1,4 +1,4 @@
-package com.movtery.visible_offhand.mixin;
+package com.movtery.visibleoffhand.mixin;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.player.AbstractClientPlayer;
@@ -13,7 +13,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-import static com.movtery.visible_offhand.VisibleOffhand.getConfig;
+import static com.movtery.visibleoffhand.VisibleOffhand.getConfig;
 
 @Mixin(ItemInHandRenderer.class)
 public abstract class ItemInHandRendererMixin {
