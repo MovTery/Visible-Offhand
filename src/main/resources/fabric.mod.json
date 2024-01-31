@@ -2,6 +2,7 @@
   "schemaVersion": 1,
   "id": "visible_offhand",
   "version": "${version}",
+  "environment": "client",
   "name": "Visible Offhand",
   "description": "Show both hands at the same time!",
   "authors": [
@@ -14,10 +15,12 @@
   },
   "license": "MIT",
   "icon": "assets/visible_offhand/icon.png",
-  "environment": "*",
   "entrypoints": {
     "client": [
       "com.movtery.visible_offhand.client.VisibleOffhandClient"
+    ],
+    "modmenu": [
+      "com.movtery.visible_offhand.screen.ModMenuScreen"
     ]
   },
   "mixins": [
