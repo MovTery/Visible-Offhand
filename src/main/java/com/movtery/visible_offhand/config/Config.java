@@ -3,6 +3,8 @@ package com.movtery.visible_offhand.config;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.movtery.visible_offhand.VisibleOffhand;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 
 import java.io.File;
 import java.io.IOException;
@@ -10,6 +12,7 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.util.Collections;
 
+@OnlyIn(Dist.CLIENT)
 public class Config {
     private static Options options = null;
     private final File file;

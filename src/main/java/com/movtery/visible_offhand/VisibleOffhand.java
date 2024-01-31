@@ -1,20 +1,18 @@
 package com.movtery.visible_offhand;
 
-import com.mojang.blaze3d.platform.InputConstants;
 import com.mojang.logging.LogUtils;
 import com.movtery.visible_offhand.config.Config;
-import com.movtery.visible_offhand.screen.RegisterModsPage;
 import net.minecraft.client.KeyMapping;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.client.event.RegisterKeyMappingsEvent;
+import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.client.ClientRegistry;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.common.util.Lazy;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
@@ -26,24 +24,21 @@ import org.slf4j.Logger;
 import java.io.File;
 import java.nio.file.Path;
 
+@OnlyIn(Dist.CLIENT)
 @Mod(VisibleOffhand.MODID)
 public class VisibleOffhand {
 
     public static final String MODID = "visible_offhand";
     public static final Logger LOGGER = LogUtils.getLogger();
-    public static final Lazy<KeyMapping> KEY_DOUBLE_HANDS = Lazy.of(() -> new KeyMapping(  //创建一个新的按键绑定
-            "button.vo.double_hands",
-            InputConstants.Type.KEYSYM,
-            GLFW.GLFW_KEY_UNKNOWN,
-            "mod.vo.name"
-    ));
+
+    public static final KeyMapping KEY_DOUBLE_HANDS = new KeyMapping("button.vo.double_hands", GLFW.GLFW_KEY_UNKNOWN, "mod.vo.name");
 
     private static Config config = null;
 
     public VisibleOffhand() {
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
         modEventBus.addListener(this::commonSetup);
-        DistExecutor.safeRunWhenOn(Dist.CLIENT, () -> RegisterModsPage::registerModsPage);
+        ClientRegistry.registerKeyBinding(KEY_DOUBLE_HANDS);
 
         MinecraftForge.EVENT_BUS.register(this);
     }
@@ -68,7 +63,7 @@ public class VisibleOffhand {
     public void onClientTick(TickEvent.ClientTickEvent event) {
         if (event.phase == TickEvent.Phase.END) {
             //显示双手开关
-            while (KEY_DOUBLE_HANDS.get().consumeClick()) {
+            while (KEY_DOUBLE_HANDS.consumeClick()) {
                 getConfig().getOptions().doubleHands = !getConfig().getOptions().doubleHands;
                 getConfig().save();
 
@@ -76,9 +71,9 @@ public class VisibleOffhand {
                 if (Minecraft.getInstance().player != null) {
                     Component component;
                     if (getConfig().getOptions().doubleHands) {
-                        component = Component.translatable("button.vo.double_hands").append(" : ").append(Component.translatable("button.vo.on"));
+                        component = new TranslatableComponent("button.vo.double_hands").append(" : ").append(new TranslatableComponent("button.vo.on"));
                     } else {
-                        component = Component.translatable("button.vo.double_hands").append(" : ").append(Component.translatable("button.vo.off"));
+                        component = new TranslatableComponent("button.vo.double_hands").append(" : ").append(new TranslatableComponent("button.vo.off"));
                     }
                     Minecraft.getInstance().player.displayClientMessage(component, true);
                 }
@@ -96,12 +91,6 @@ public class VisibleOffhand {
                 loadConfig();
                 LOGGER.info("Config file not found, has been regenerated");
             }
-        }
-
-        //注册按键绑定
-        @SubscribeEvent
-        public static void registerBindings(RegisterKeyMappingsEvent event) {
-            event.register(KEY_DOUBLE_HANDS.get());
         }
     }
 }
