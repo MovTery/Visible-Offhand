@@ -3,12 +3,14 @@ package com.movtery.visibleoffhand;
 import com.mojang.blaze3d.platform.InputConstants;
 import com.mojang.logging.LogUtils;
 import com.movtery.visibleoffhand.config.Config;
+import com.movtery.visibleoffhand.screen.RegisterModsPage;
 import net.minecraft.client.KeyMapping;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.chat.Component;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.DistExecutor;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
@@ -39,6 +41,7 @@ public class VisibleOffhand {
 
     public VisibleOffhand(IEventBus modEventBus) {
         modEventBus.addListener(this::commonSetup);
+        DistExecutor.safeRunWhenOn(Dist.CLIENT, () -> RegisterModsPage::registerModsPage);
 
         NeoForge.EVENT_BUS.register(this);
     }
