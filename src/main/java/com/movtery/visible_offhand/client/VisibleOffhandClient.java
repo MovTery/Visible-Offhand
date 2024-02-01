@@ -6,9 +6,11 @@ import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
+import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.client.option.KeyBinding;
 import net.minecraft.client.util.InputUtil;
+import net.minecraft.server.command.CommandManager;
 import net.minecraft.text.Text;
 import org.lwjgl.glfw.GLFW;
 
@@ -36,8 +38,22 @@ public class VisibleOffhandClient implements ClientModInitializer {
         config.load();
     }
 
+    public static void reloadConfig() {
+        if (config == null) loadConfig();
+        config.load();
+        LOGGER.config("The configuration file has been reloaded!");
+    }
+
     @Override
     public void onInitializeClient() {
+        CommandRegistrationCallback.EVENT.register((dispatcher, registryAccess, environment) -> dispatcher.register(CommandManager.literal("visibleoffhand")
+                .then(CommandManager.literal("reload").executes(context -> {
+                    reloadConfig();
+                    context.getSource().sendFeedback(() -> Text.translatable("config.vo.reloaded"), false);
+                    return 1;
+                }))
+        ));
+
         doubleHands = KeyBindingHelper.registerKeyBinding(new KeyBinding(
                 "button.vo.double_hands",
                 InputUtil.Type.KEYSYM,

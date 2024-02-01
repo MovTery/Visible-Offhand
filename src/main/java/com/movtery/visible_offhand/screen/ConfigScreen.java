@@ -4,10 +4,10 @@ import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.widget.ButtonWidget;
 import net.minecraft.client.gui.widget.CyclingButtonWidget;
-import net.minecraft.screen.ScreenTexts;
 import net.minecraft.text.Text;
 
 import static com.movtery.visible_offhand.client.VisibleOffhandClient.getConfig;
+import static com.movtery.visible_offhand.client.VisibleOffhandClient.reloadConfig;
 
 public class ConfigScreen extends Screen {
     private final Screen parent;
@@ -26,7 +26,8 @@ public class ConfigScreen extends Screen {
                     getConfig().save();
                 }));
 
-        this.addDrawableChild(ButtonWidget.builder(ScreenTexts.DONE, (button) -> {
+        this.addDrawableChild(ButtonWidget.builder(Text.translatable("button.vo.reload_config"), (button) -> {
+            reloadConfig();
             if (this.client != null) {
                 this.client.setScreen(this.parent);
             }

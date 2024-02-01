@@ -6,7 +6,9 @@ import net.minecraft.client.network.AbstractClientPlayerEntity;
 import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.item.HeldItemRenderer;
 import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.registry.Registries;
 import net.minecraft.util.Arm;
 import net.minecraft.util.Hand;
 import org.spongepowered.asm.mixin.Mixin;
@@ -27,8 +29,10 @@ public abstract class HeldItemRendererMixin {
     private void doubleHands(AbstractClientPlayerEntity player, float tickDelta, float pitch, Hand hand, float swingProgress, ItemStack item, float equipProgress, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, CallbackInfo ci) {
         if (getConfig().getOptions().doubleHands) {
             boolean mainHand = hand == Hand.MAIN_HAND;
+            Item mainHandItem = player.getMainHandStack().getItem();
+            String mainHandItemId = Registries.ITEM.getId(mainHandItem).toString();
             Arm offArm = mainHand ? player.getMainArm() : player.getMainArm().getOpposite();
-            if (item.isEmpty() && (!mainHand && !player.isInvisible())) {
+            if (item.isEmpty() && !getConfig().getOptions().handheldItems.contains(mainHandItemId) && (!mainHand && !player.isInvisible())) {
                 this.renderArmHoldingItem(matrices, vertexConsumers, light, equipProgress, swingProgress, offArm);
             }
         }
