@@ -104,10 +104,10 @@ public class VisibleOffhand {
             }
         }
 
-        //注册按键绑定
         @SubscribeEvent
-        public static void registerBindings(RegisterKeyMappingsEvent event) {
-            event.register(KEY_DOUBLE_HANDS.get());
+        public static void registerKeyMappings(RegisterKeyMappingsEvent keyMappingsEvent) {
+            //注册按键绑定
+            keyMappingsEvent.register(KEY_DOUBLE_HANDS.get());
         }
     }
 }
