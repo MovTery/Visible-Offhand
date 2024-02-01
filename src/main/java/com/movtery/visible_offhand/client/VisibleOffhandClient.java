@@ -36,6 +36,12 @@ public class VisibleOffhandClient implements ClientModInitializer {
         config.load();
     }
 
+    public static void reloadConfig() {
+        if (config == null) loadConfig();
+        config.load();
+        LOGGER.config("The configuration file has been reloaded!");
+    }
+
     @Override
     public void onInitializeClient() {
         doubleHands = KeyBindingHelper.registerKeyBinding(new KeyBinding(
