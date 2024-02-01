@@ -7,7 +7,6 @@ import net.minecraft.client.gui.components.CycleButton;
 import net.minecraft.client.gui.screens.OptionsSubScreen;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.SkinCustomizationScreen;
-import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.entity.player.PlayerModelPart;
@@ -20,6 +19,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import static com.movtery.visible_offhand.VisibleOffhand.getConfig;
+import static com.movtery.visible_offhand.VisibleOffhand.reloadConfig;
 
 @OnlyIn(Dist.CLIENT)
 @Mixin(SkinCustomizationScreen.class)
@@ -53,7 +53,8 @@ public class Config_SkinCustomizationScreenMixin extends OptionsSubScreen {
                     getConfig().save();
                 }));
 
-        this.addRenderableWidget(new Button(this.width / 2 + 2, this.height / 6 + 24 * (i >> 1), 100, 20, CommonComponents.GUI_DONE, (p_96700_) -> {
+        this.addRenderableWidget(new Button(this.width / 2 + 2, this.height / 6 + 24 * (i >> 1), 100, 20, new TranslatableComponent("button.vo.reload_config"), (p_96700_) -> {
+            reloadConfig();
             if (this.minecraft != null) {
                 this.minecraft.setScreen(this.lastScreen);
             }
