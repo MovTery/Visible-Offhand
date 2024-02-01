@@ -3,7 +3,6 @@ package com.movtery.visible_offhand.mixin;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.gui.screen.Screen;
-import net.minecraft.client.gui.screen.ScreenTexts;
 import net.minecraft.client.gui.screen.options.GameOptionsScreen;
 import net.minecraft.client.gui.screen.options.SkinOptionsScreen;
 import net.minecraft.client.gui.widget.ButtonWidget;
@@ -21,6 +20,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import static com.movtery.visible_offhand.client.VisibleOffhandClient.getConfig;
+import static com.movtery.visible_offhand.client.VisibleOffhandClient.reloadConfig;
 
 @Environment(EnvType.CLIENT)
 @Mixin(SkinOptionsScreen.class)
@@ -65,7 +65,8 @@ public abstract class Config_SkinOptionsScreenMixin extends GameOptionsScreen {
                     button.setMessage(onOrOff(getConfig().getOptions().doubleHands));
                 }));
 
-        this.addButton(new ButtonWidget(this.width / 2 + 2, this.height / 6 + 24 * (i >> 1), 100, 20, ScreenTexts.DONE, (button) -> {
+        this.addButton(new ButtonWidget(this.width / 2 + 2, this.height / 6 + 24 * (i >> 1), 100, 20, new TranslatableText("button.vo.reload_config"), (button) -> {
+            reloadConfig();
             if (this.client != null) {
                 this.client.openScreen(this.parent);
             }
