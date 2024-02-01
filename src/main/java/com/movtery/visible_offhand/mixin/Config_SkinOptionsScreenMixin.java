@@ -9,7 +9,6 @@ import net.minecraft.client.gui.widget.ButtonWidget;
 import net.minecraft.client.gui.widget.CyclingButtonWidget;
 import net.minecraft.client.option.GameOptions;
 import net.minecraft.client.render.entity.PlayerModelPart;
-import net.minecraft.screen.ScreenTexts;
 import net.minecraft.text.Text;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
@@ -18,6 +17,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import static com.movtery.visible_offhand.client.VisibleOffhandClient.getConfig;
+import static com.movtery.visible_offhand.client.VisibleOffhandClient.reloadConfig;
 
 @Environment(EnvType.CLIENT)
 @Mixin(SkinOptionsScreen.class)
@@ -51,7 +51,8 @@ public abstract class Config_SkinOptionsScreenMixin extends GameOptionsScreen {
                     getConfig().save();
                 }));
 
-        this.addDrawableChild(ButtonWidget.builder(ScreenTexts.DONE, (button) -> {
+        this.addDrawableChild(ButtonWidget.builder(Text.translatable("button.vo.reload_config"), (button) -> {
+            reloadConfig();
             if (this.client != null) {
                 this.client.setScreen(this.parent);
             }
