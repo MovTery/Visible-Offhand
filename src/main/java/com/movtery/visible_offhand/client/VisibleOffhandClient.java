@@ -48,7 +48,7 @@ public class VisibleOffhandClient implements ClientModInitializer {
                 "button.vo.double_hands",
                 InputUtil.Type.KEYSYM,
                 GLFW.GLFW_KEY_UNKNOWN,
-                "mod.vo.name"
+                "modmenu.nameTranslation.visible_offhand"
         ));
 
         ClientTickEvents.END_CLIENT_TICK.register(client -> {
