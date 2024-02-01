@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.util.Collections;
+import java.util.List;
 
 @Environment(EnvType.CLIENT)
 public class Config {
@@ -53,5 +54,6 @@ public class Config {
 
     public static class Options {
         public boolean doubleHands = true;
+        public List<String> handheldItems = List.of("minecraft:filled_map");
     }
 }
