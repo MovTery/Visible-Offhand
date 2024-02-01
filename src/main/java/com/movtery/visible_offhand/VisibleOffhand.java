@@ -61,6 +61,12 @@ public class VisibleOffhand {
         config.load();
     }
 
+    public static void reloadConfig() {
+        if (config == null) loadConfig();
+        config.load();
+        LOGGER.info("The configuration file has been reloaded!");
+    }
+
     private void commonSetup(final FMLCommonSetupEvent event) {
     }
 

@@ -4,11 +4,11 @@ import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.CycleButton;
 import net.minecraft.client.gui.screens.Screen;
-import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
 import org.jetbrains.annotations.NotNull;
 
 import static com.movtery.visible_offhand.VisibleOffhand.getConfig;
+import static com.movtery.visible_offhand.VisibleOffhand.reloadConfig;
 
 public class ConfigScreen extends Screen {
     private final Screen parent;
@@ -27,7 +27,8 @@ public class ConfigScreen extends Screen {
                     getConfig().save();
                 }));
 
-        this.addRenderableWidget(Button.builder(CommonComponents.GUI_DONE, (button) -> {
+        this.addRenderableWidget(Button.builder(Component.translatable("button.vo.reload_config"), (button) -> {
+            reloadConfig();
             if (this.minecraft != null) {
                 this.minecraft.setScreen(this.parent);
             }
