@@ -3,7 +3,6 @@ package com.movtery.visible_offhand;
 import com.mojang.blaze3d.platform.InputConstants;
 import com.mojang.logging.LogUtils;
 import com.movtery.visible_offhand.config.Config;
-import com.movtery.visible_offhand.screen.RegisterModsPage;
 import net.minecraft.client.KeyMapping;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.chat.Component;
@@ -14,7 +13,6 @@ import net.minecraftforge.common.util.Lazy;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
@@ -43,7 +41,6 @@ public class VisibleOffhand {
     public VisibleOffhand() {
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
         modEventBus.addListener(this::commonSetup);
-        DistExecutor.safeRunWhenOn(Dist.CLIENT, () -> RegisterModsPage::registerModsPage);
 
         MinecraftForge.EVENT_BUS.register(this);
     }
