@@ -6,6 +6,7 @@ import com.movtery.visibleoffhand.config.Config;
 import com.movtery.visibleoffhand.screen.RegisterModsPage;
 import net.minecraft.client.KeyMapping;
 import net.minecraft.client.Minecraft;
+import net.minecraft.commands.Commands;
 import net.minecraft.network.chat.Component;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.IEventBus;
@@ -16,6 +17,7 @@ import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.neoforged.fml.loading.FMLLoader;
 import net.neoforged.jarjar.nio.util.Lazy;
+import net.neoforged.neoforge.client.event.RegisterClientCommandsEvent;
 import net.neoforged.neoforge.client.event.RegisterKeyMappingsEvent;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.TickEvent;
@@ -59,6 +61,12 @@ public class VisibleOffhand {
         config.load();
     }
 
+    public static void reloadConfig() {
+        if (config == null) loadConfig();
+        config.load();
+        LOGGER.info("The configuration file has been reloaded!");
+    }
+
     private void commonSetup(final FMLCommonSetupEvent event) {
     }
 
@@ -82,6 +90,18 @@ public class VisibleOffhand {
                 }
             }
         }
+    }
+
+    // 注册客户端命令
+    @SubscribeEvent
+    public void registerCommands(RegisterClientCommandsEvent event) {
+        event.getDispatcher().register(Commands.literal("visibleoffhand")
+                .then(Commands.literal("reload").executes((context) -> {
+                    reloadConfig();
+                    context.getSource().sendSystemMessage(Component.translatable("config.vo.reloaded"));
+                    return 1;
+                }))
+        );
     }
 
     @Mod.EventBusSubscriber(modid = MODID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
