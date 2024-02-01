@@ -6,8 +6,10 @@ import com.movtery.visible_offhand.config.Config;
 import com.movtery.visible_offhand.screen.RegisterModsPage;
 import net.minecraft.client.KeyMapping;
 import net.minecraft.client.Minecraft;
+import net.minecraft.commands.Commands;
 import net.minecraft.network.chat.Component;
 import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.client.event.RegisterClientCommandsEvent;
 import net.minecraftforge.client.event.RegisterKeyMappingsEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.util.Lazy;
@@ -90,6 +92,18 @@ public class VisibleOffhand {
                 }
             }
         }
+    }
+
+    // 注册客户端命令
+    @SubscribeEvent
+    public void registerCommands(RegisterClientCommandsEvent clientCommandsEvent) {
+        clientCommandsEvent.getDispatcher().register(Commands.literal("visibleoffhand")
+                .then(Commands.literal("reload").executes((context) -> {
+                    reloadConfig();
+                    context.getSource().sendSystemMessage(Component.translatable("config.vo.reloaded"));
+                    return 1;
+                }))
+        );
     }
 
     @Mod.EventBusSubscriber(modid = MODID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
