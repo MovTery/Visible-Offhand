@@ -1,54 +1,54 @@
 package com.movtery.visible_offhand.screen;
 
-import net.minecraft.client.gui.DrawContext;
-import net.minecraft.client.gui.screen.Screen;
-import net.minecraft.client.gui.widget.ButtonWidget;
-import net.minecraft.client.gui.widget.CyclingButtonWidget;
-import net.minecraft.text.Text;
+import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.components.Button;
+import net.minecraft.client.gui.components.CycleButton;
+import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.network.chat.Component;
 
-import static com.movtery.visible_offhand.client.VisibleOffhandClient.getConfig;
-import static com.movtery.visible_offhand.client.VisibleOffhandClient.reloadConfig;
+import static com.movtery.visible_offhand.VisibleOffhandClient.getConfig;
+import static com.movtery.visible_offhand.VisibleOffhandClient.reloadConfig;
 
 public class ConfigScreen extends Screen {
     private final Screen parent;
 
     protected ConfigScreen(Screen parent) {
-        super(Text.translatable("modmenu.nameTranslation.visible_offhand"));
+        super(Component.translatable("modmenu.nameTranslation.visible_offhand"));
         this.parent = parent;
     }
 
     @Override
     protected void init() {
         //创建一个新的按钮，用于控制开关双手显示
-        this.addDrawableChild(CyclingButtonWidget.onOffBuilder(onOrOff(getConfig().getOptions().doubleHands), onOrOff(!getConfig().getOptions().doubleHands))
-                .build(this.width / 2 - 112, this.height / 2, 110, 20, Text.translatable("button.vo.double_hands"), (button, enabled) -> {
+        this.addRenderableWidget(CycleButton.booleanBuilder(onOrOff(getConfig().getOptions().doubleHands), onOrOff(!getConfig().getOptions().doubleHands))
+                .create(this.width / 2 - 112, this.height / 2, 110, 20, Component.translatable("button.vo.double_hands"), (button, enabled) -> {
                     getConfig().getOptions().doubleHands = !getConfig().getOptions().doubleHands;
                     getConfig().save();
                 }));
 
-        this.addDrawableChild(ButtonWidget.builder(Text.translatable("button.vo.reload_config"), (button) -> {
+        this.addRenderableWidget(Button.builder(Component.translatable("button.vo.reload_config"), (button) -> {
             reloadConfig();
-            if (this.client != null) {
-                this.client.setScreen(this.parent);
+            if (this.minecraft != null) {
+                this.minecraft.setScreen(this.parent);
             }
-        }).dimensions(this.width / 2 + 2, this.height / 2, 110, 20).build());
+        }).bounds(this.width / 2 + 2, this.height / 2, 110, 20).build());
 
     }
 
     @Override
-    public void render(DrawContext context, int mouseX, int mouseY, float delta) {
-        renderBackground(context, mouseX, mouseY, delta);
-        super.render(context, mouseX, mouseY, delta);
-        context.drawCenteredTextWithShadow(this.textRenderer, this.title, this.width / 2, this.height / 2 - 30, 16777215);
+    public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float delta) {
+        renderBackground(guiGraphics, mouseX, mouseY, delta);
+        super.render(guiGraphics, mouseX, mouseY, delta);
+        guiGraphics.drawCenteredString(this.font, this.title, this.width / 2, this.height / 2 - 30, 16777215);
     }
 
-    private Text onOrOff(Boolean button) {
-        Text text;
+    private Component onOrOff(Boolean button) {
+        Component component;
         if (button) {
-            text = Text.translatable("button.vo.on");
+            component = Component.translatable("button.vo.on");
         } else {
-            text = Text.translatable("button.vo.off");
+            component = Component.translatable("button.vo.off");
         }
-        return text;
+        return component;
     }
 }

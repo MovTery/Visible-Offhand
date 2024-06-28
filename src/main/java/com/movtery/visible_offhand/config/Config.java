@@ -2,7 +2,7 @@ package com.movtery.visible_offhand.config;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.movtery.visible_offhand.client.VisibleOffhandClient;
+import com.movtery.visible_offhand.VisibleOffhand;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 
@@ -34,7 +34,7 @@ public class Config {
             try {
                 options = GSON.fromJson(Files.newBufferedReader(file.toPath(), StandardCharsets.UTF_8), Options.class);
             } catch (IOException e) {
-                VisibleOffhandClient.LOGGER.warning("Error loading config");
+                VisibleOffhand.LOGGER.error("Error loading config");
             }
 
         }
@@ -48,7 +48,7 @@ public class Config {
         try {
             Files.write(file.toPath(), Collections.singleton(GSON.toJson(options)), StandardCharsets.UTF_8);
         } catch (IOException e) {
-            VisibleOffhandClient.LOGGER.warning("Error saving config");
+            VisibleOffhand.LOGGER.error("Error saving config");
         }
     }
 

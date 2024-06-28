@@ -1,33 +1,39 @@
 {
-  "schemaVersion": 1,
-  "id": "visible_offhand",
-  "version": "${version}",
-  "environment": "client",
-  "name": "Visible Offhand",
-  "description": "Show both hands at the same time!",
-  "authors": [
-    "MovTery"
-  ],
-  "contact": {
-    "homepage": "https://modrinth.com/mod/visible-offhand",
-    "sources": "https://github.com/HopiHopy/Visible-Offhand",
-    "issues": "https://github.com/HopiHopy/Visible-Offhand/issues"
-  },
-  "license": "MIT",
-  "icon": "assets/visible_offhand/icon.png",
-  "entrypoints": {
-    "client": [
-      "com.movtery.visible_offhand.client.VisibleOffhandClient"
-    ],
-    "modmenu": [
-      "com.movtery.visible_offhand.screen.ModMenuScreen"
-    ]
-  },
-  "mixins": [
-    "visible_offhand.mixins.json"
-  ],
-  "depends": {
-    "minecraft": "${minecraft}",
-    "fabric-api": "${fabric_api}"
-  }
+	"schemaVersion": 1,
+	"id": "visible_offhand",
+	"version": "${version}",
+	"name": "Visible Offhand",
+	"description": "Show both hands at the same time!",
+	"authors": [
+		"MovTery"
+	],
+	"contact": {
+		"homepage": "https://modrinth.com/mod/visible-offhand",
+		"sources": "https://github.com/HopiHopy/Visible-Offhand",
+		"issues": "https://github.com/HopiHopy/Visible-Offhand/issues"
+	},
+	"license": "MIT",
+	"icon": "assets/visible_offhand/icon.png",
+	"environment": "client",
+	"entrypoints": {
+		"client": [
+			"com.movtery.visible_offhand.VisibleOffhandClient"
+		],
+		"main": [
+			"com.movtery.visible_offhand.VisibleOffhand"
+		],
+		"fabric-datagen": [
+			"com.movtery.visible_offhand.datageneration.VisibleOffhandDataGenerator"
+		],
+		"modmenu": [
+			"com.movtery.visible_offhand.screen.ModMenuScreen"
+		]
+	},
+	"mixins": [
+		"visible_offhand.mixins.json"
+	],
+	"depends": {
+		"minecraft": "${minecraft}",
+		"fabric-api": "*"
+	}
 }
