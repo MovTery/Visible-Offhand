@@ -27,12 +27,12 @@ public class ConfigScreen extends Screen {
                     getConfig().save();
                 }));
 
-        this.addRenderableWidget(new Button(this.width / 2 + 2, this.height / 2, 110, 20, Component.translatable("button.vo.reload_config"), (button) -> {
+        this.addRenderableWidget(Button.builder(Component.translatable("button.vo.reload_config"), button -> {
             reloadConfig();
-            if (this.minecraft != null) {
-                this.minecraft.setScreen(this.parent);
+            if (minecraft != null) {
+                minecraft.setScreen(parent);
             }
-        }));
+        }).bounds(this.width / 2 + 2, this.height / 2, 110, 20).build());
     }
 
     @Override

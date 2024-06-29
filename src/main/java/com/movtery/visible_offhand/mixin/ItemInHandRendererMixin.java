@@ -4,13 +4,13 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.player.AbstractClientPlayer;
 import net.minecraft.client.renderer.ItemInHandRenderer;
 import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.core.Registry;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.HumanoidArm;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.registries.ForgeRegistries;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -30,7 +30,7 @@ public abstract class ItemInHandRendererMixin {
         if (getConfig().getOptions().doubleHands) {
             boolean mainHand = pHand == InteractionHand.MAIN_HAND;
             Item mainHandItem = pPlayer.getMainHandItem().getItem();
-            String mainHandItemId = Registry.ITEM.getKey(mainHandItem).toString();
+            String mainHandItemId = ForgeRegistries.ITEMS.getKey(mainHandItem).toString();
             HumanoidArm offArm = mainHand ? pPlayer.getMainArm() : pPlayer.getMainArm().getOpposite();
             if (pStack.isEmpty() && !getConfig().getOptions().handheldItems.contains(mainHandItemId)) {
                 if (!mainHand && !pPlayer.isInvisible()) {
