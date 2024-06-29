@@ -1,11 +1,15 @@
 {
-	"required": true,
-	"package": "com.movtery.visible_offhand.mixin",
-	"compatibilityLevel": "JAVA_21",
-	"mixins": [
-		"ItemInHandRendererMixin"
-	],
-	"injectors": {
-		"defaultRequire": 1
-	}
+  "required": true,
+  "minVersion": "0.8",
+  "package": "com.movtery.visible_offhand.mixin",
+  "compatibilityLevel": "JAVA_8",
+  "refmap": "visible_offhand.refmap.json",
+  "mixins": [
+  ],
+  "client": [
+    "ItemInHandRendererMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
 }

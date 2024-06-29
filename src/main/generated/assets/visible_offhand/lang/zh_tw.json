@@ -1,9 +1,0 @@
-{
-  "button.vo.double_hands": "顯示雙手",
-  "button.vo.off": "關",
-  "button.vo.on": "開",
-  "button.vo.reload_config": "重載配置文件/完成",
-  "config.vo.reloaded": "配置文件已經重新載入!",
-  "modmenu.descriptionTranslation.visible_offhand": "讓你的第一人稱視角內同時渲染兩隻手！",
-  "modmenu.nameTranslation.visible_offhand": "可見副手"
-}

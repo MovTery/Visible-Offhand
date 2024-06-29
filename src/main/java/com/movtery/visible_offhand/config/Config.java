@@ -3,8 +3,8 @@ package com.movtery.visible_offhand.config;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.movtery.visible_offhand.VisibleOffhand;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 
 import java.io.File;
 import java.io.IOException;
@@ -13,13 +13,13 @@ import java.nio.file.Files;
 import java.util.Collections;
 import java.util.List;
 
-@Environment(EnvType.CLIENT)
+@OnlyIn(Dist.CLIENT)
 public class Config {
+    private static Options options = null;
     private final File file;
     private final Gson GSON = new GsonBuilder()
             .setPrettyPrinting()
             .create();
-    private Options options = null;
 
     public Config(File file) {
         this.file = file;
