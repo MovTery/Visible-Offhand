@@ -1,9 +1,0 @@
-{
-  "mod.vo.name": "可见副手",
-  "button.vo.double_hands": "显示双手",
-  "button.vo.reload_config": "重载配置文件/完成",
-  "button.vo.on": "开",
-  "button.vo.off": "关",
-
-  "config.vo.reloaded": "配置文件已经重新加载!"
-}

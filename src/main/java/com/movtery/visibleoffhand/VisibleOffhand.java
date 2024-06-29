@@ -6,21 +6,19 @@ import com.movtery.visibleoffhand.config.Config;
 import com.movtery.visibleoffhand.screen.RegisterModsPage;
 import net.minecraft.client.KeyMapping;
 import net.minecraft.client.Minecraft;
-import net.minecraft.commands.Commands;
 import net.minecraft.network.chat.Component;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.bus.api.SubscribeEvent;
-import net.neoforged.fml.DistExecutor;
+import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.neoforged.fml.loading.FMLLoader;
 import net.neoforged.jarjar.nio.util.Lazy;
-import net.neoforged.neoforge.client.event.RegisterClientCommandsEvent;
+import net.neoforged.neoforge.client.event.ClientTickEvent;
 import net.neoforged.neoforge.client.event.RegisterKeyMappingsEvent;
 import net.neoforged.neoforge.common.NeoForge;
-import net.neoforged.neoforge.event.TickEvent;
 import org.lwjgl.glfw.GLFW;
 import org.slf4j.Logger;
 
@@ -43,7 +41,6 @@ public class VisibleOffhand {
 
     public VisibleOffhand(IEventBus modEventBus) {
         modEventBus.addListener(this::commonSetup);
-        DistExecutor.safeRunWhenOn(Dist.CLIENT, () -> RegisterModsPage::registerModsPage);
 
         NeoForge.EVENT_BUS.register(this);
     }
@@ -71,44 +68,31 @@ public class VisibleOffhand {
     }
 
     @SubscribeEvent
-    public void onClientTick(TickEvent.ClientTickEvent event) {
-        if (event.phase == TickEvent.Phase.END) {
-            //显示双手开关
-            while (KEY_DOUBLE_HANDS.get().consumeClick()) {
-                getConfig().getOptions().doubleHands = !getConfig().getOptions().doubleHands;
-                getConfig().save();
+    public void onClientTick(ClientTickEvent.Post event) {
+        //显示双手开关
+        while (KEY_DOUBLE_HANDS.get().consumeClick()) {
+            getConfig().getOptions().doubleHands = !getConfig().getOptions().doubleHands;
+            getConfig().save();
 
-                //给玩家发送提示消息
-                if (Minecraft.getInstance().player != null) {
-                    Component component;
-                    if (getConfig().getOptions().doubleHands) {
-                        component = Component.translatable("button.vo.double_hands").append(" : ").append(Component.translatable("button.vo.on"));
-                    } else {
-                        component = Component.translatable("button.vo.double_hands").append(" : ").append(Component.translatable("button.vo.off"));
-                    }
-                    Minecraft.getInstance().player.displayClientMessage(component, true);
+            //给玩家发送提示消息
+            if (Minecraft.getInstance().player != null) {
+                Component component;
+                if (getConfig().getOptions().doubleHands) {
+                    component = Component.translatable("button.vo.double_hands").append(" : ").append(Component.translatable("button.vo.on"));
+                } else {
+                    component = Component.translatable("button.vo.double_hands").append(" : ").append(Component.translatable("button.vo.off"));
                 }
+                Minecraft.getInstance().player.displayClientMessage(component, true);
             }
         }
     }
 
-    // 注册客户端命令
-    @SubscribeEvent
-    public void registerCommands(RegisterClientCommandsEvent event) {
-        event.getDispatcher().register(Commands.literal("visibleoffhand")
-                .then(Commands.literal("reload").executes((context) -> {
-                    reloadConfig();
-                    context.getSource().sendSystemMessage(Component.translatable("config.vo.reloaded"));
-                    return 1;
-                }))
-        );
-    }
-
-    @Mod.EventBusSubscriber(modid = MODID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
+    @EventBusSubscriber(modid = MODID, bus = EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
     public static class ClientModEvents {
 
         @SubscribeEvent
         public static void onClientSetup(FMLClientSetupEvent event) {
+            RegisterModsPage.registerModsPage();
             //检测是否生成过配置文件
             if (config == null) {
                 loadConfig();

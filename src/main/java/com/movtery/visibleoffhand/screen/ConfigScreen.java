@@ -37,9 +37,8 @@ public class ConfigScreen extends Screen {
     @Override
     public void render(@NotNull GuiGraphics p_281549_, int p_281550_, int p_282878_, float p_282465_) {
         renderBackground(p_281549_, p_281550_, p_282878_, p_282465_);
-        p_281549_.drawCenteredString(this.font, this.title, this.width / 2, this.height / 2 - 30, 16777215);
-
         super.render(p_281549_, p_281550_, p_282878_, p_282465_);
+        p_281549_.drawCenteredString(this.font, this.title, this.width / 2, this.height / 2 - 30, 16777215);
     }
 
 
